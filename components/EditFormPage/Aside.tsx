@@ -66,6 +66,18 @@ const Aside = ({ form, setForm }) => {
     });
   };
 
+  const advanceInOrder = (e, index) => {
+    e.preventDefault();
+    setForm((prev) => {
+      let newFieldsOrder = [...prev.fields];
+      let bubble = newFieldsOrder[index].sort_index;
+      newFieldsOrder[index].sort_index = newFieldsOrder[index - 1].sort_index;
+      newFieldsOrder[index - 1].sort_index = bubble;
+
+      return { ...prev, fields: [...newFieldsOrder] };
+    });
+  };
+
   const submitUpdate = async (e) => {
     e.preventDefault();
     console.log(form);
@@ -112,7 +124,12 @@ const Aside = ({ form, setForm }) => {
                 updateName(e, field);
               }}
             />
-            <button className="ml-auto p-2">
+            <button
+              className="ml-auto p-2"
+              onClick={(e) => {
+                advanceInOrder(e, key);
+              }}
+            >
               <ArrowNarrowUpIcon className="h-5 w-5 mr-2" />
             </button>
             <button className="p-2">
