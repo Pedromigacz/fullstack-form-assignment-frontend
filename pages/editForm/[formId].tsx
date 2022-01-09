@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
+import EditFormPage from "../../components/EditFormPage";
 
 const EditForm: NextPage = () => {
-  return <h1>Edit Page</h1>;
+  return <EditFormPage />;
 };
 
 export default EditForm;
