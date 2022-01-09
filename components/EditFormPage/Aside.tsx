@@ -53,7 +53,8 @@ const Aside = ({ form, setForm }) => {
     }));
   };
 
-  const removeField = (index) => {
+  const removeField = (e, index) => {
+    e.preventDefault();
     setForm((prev) => {
       const newFields = prev.fields.filter((field, key) => {
         return key !== index;
@@ -172,7 +173,7 @@ const Aside = ({ form, setForm }) => {
             <button
               className="p-2"
               onClick={(e) => {
-                removeField(key);
+                removeField(e, key);
               }}
             >
               <XIcon className="h-5 w-5 mr-2 text-orange-700" />
