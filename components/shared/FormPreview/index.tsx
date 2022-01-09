@@ -1,13 +1,16 @@
+import { useState } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 
 const FormPreview = ({ form }) => {
-  const { handleSubmit, register } = useForm();
+  const [dummyData, setDummyData] = useState({});
 
-  const onSubmit = (e) => console.log(e);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(dummyData);
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mx-8 mt-2 text-zinc-50">
+    <form onSubmit={onSubmit} className="mx-8 mt-2 text-zinc-50">
       <h2 className="text-2xl font-bold mb-8">
         Form preview: &quot;{form.name}&rdquo;
       </h2>
@@ -18,7 +21,14 @@ const FormPreview = ({ form }) => {
           <input
             className="border-none bg-zinc-800 rounded-md px-6 py-4 mt-2 mb-4 w-full text-xl font-semibold"
             name={field.label}
-            {...register(field.label)}
+            value={dummyData[field.label]}
+            onChange={(e) => {
+              setDummyData((prev) => {
+                let newData = { ...prev };
+                newData[field.label] = e.target.value;
+                return newData;
+              });
+            }}
           />
         </div>
       ))}
