@@ -3,13 +3,30 @@ import {
   ArrowNarrowDownIcon,
   XIcon,
 } from "@heroicons/react/solid";
+import { gql, useQuery, useMutation } from "@apollo/client";
+
+const UpdateFormQuery = gql`
+  mutation ($input: UpdateFormInput!, $fields: [UpdateFormFieldInput]) {
+    updateForm(input: $input, fields: $fields) {
+      id
+      name
+      fields {
+        id
+        sort_index
+        label
+      }
+    }
+  }
+`;
 
 const Aside = ({ form, setForm }) => {
+  const [updateForm] = useMutation(UpdateFormQuery);
   const changeName = (e) => {
     setForm((prev) => ({ ...prev, name: e.target.value }));
   };
 
   const updateName = (e, field) => {
+    e.preventDefault();
     setForm((prev) => {
       const newFields = prev.fields.map((iterationField) => {
         if (iterationField.id === field.id)
@@ -20,7 +37,8 @@ const Aside = ({ form, setForm }) => {
     });
   };
 
-  const addField = () => {
+  const addField = (e) => {
+    e.preventDefault();
     setForm((prev) => ({
       ...prev,
       fields: [
@@ -48,8 +66,27 @@ const Aside = ({ form, setForm }) => {
     });
   };
 
+  const submitUpdate = async (e) => {
+    e.preventDefault();
+    console.log(form);
+    await updateForm({
+      variables: {
+        input: { id: form.id, name: form.name },
+        fields: form.fields.map((field) => ({
+          label: field.label,
+          id: field.id,
+          sort_index: field.sort_index,
+        })),
+      },
+    });
+    window.alert("Form saved successfully");
+  };
+
   return (
-    <aside className="min-w-[600px] p-12 flex flex-col items-end">
+    <form
+      className="min-w-[600px] p-12 flex flex-col items-end"
+      onSubmit={submitUpdate}
+    >
       <div className="mb-6 w-full">
         <label className="block text-2xl font-bold">Title:</label>
         <input
@@ -103,7 +140,7 @@ const Aside = ({ form, setForm }) => {
       <button className="bg-cyan-600 text-gray-50 px-4 py-2 rounded-md text-lg mt-auto">
         Save
       </button>
-    </aside>
+    </form>
   );
 };
 
