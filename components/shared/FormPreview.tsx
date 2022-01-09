@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const PuppetForm = ({ form }) => {
+const FormPreview = ({ form }) => {
   return (
     <form className="mx-8 mt-2 text-zinc-50">
       <h2 className="text-2xl font-bold mb-8">
@@ -23,4 +23,4 @@ const PuppetForm = ({ form }) => {
   );
 };
 
-export default PuppetForm;
+export default FormPreview;
