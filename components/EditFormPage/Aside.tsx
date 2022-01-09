@@ -21,16 +21,15 @@ const UpdateFormQuery = gql`
 
 const Aside = ({ form, setForm }) => {
   const [updateForm] = useMutation(UpdateFormQuery);
-  const changeName = (e) => {
+  const updateName = (e) => {
     setForm((prev) => ({ ...prev, name: e.target.value }));
   };
 
-  const updateName = (e, field) => {
+  const updateLabel = (e, index) => {
     e.preventDefault();
     setForm((prev) => {
-      const newFields = prev.fields.map((iterationField) => {
-        if (iterationField.id === field.id)
-          return { ...iterationField, label: e.target.value };
+      const newFields = prev.fields.map((iterationField, key) => {
+        if (index === key) return { ...iterationField, label: e.target.value };
         return iterationField;
       });
       return { ...prev, fields: [...newFields] };
@@ -134,7 +133,7 @@ const Aside = ({ form, setForm }) => {
         <input
           type="text"
           value={form.name}
-          onChange={changeName}
+          onChange={updateName}
           className="bg-zinc-200 rounded-md px-2 py-1 text-xl font-semibold"
         />
       </div>
@@ -151,7 +150,7 @@ const Aside = ({ form, setForm }) => {
               className="bg-zinc-200 border-none outline-0 px-4 py-3 inline-block"
               value={field.label}
               onChange={(e) => {
-                updateName(e, field);
+                updateLabel(e, key);
               }}
             />
             <button
