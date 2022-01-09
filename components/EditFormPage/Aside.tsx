@@ -20,6 +20,22 @@ const Aside = ({ form, setForm }) => {
     });
   };
 
+  const addField = () => {
+    setForm((prev) => ({
+      ...prev,
+      fields: [
+        ...prev.fields,
+        {
+          label: "",
+          sort_index:
+            prev.fields.reduce((prev, curr) => {
+              return Math.max(prev, curr.sort_index);
+            }, 0) + 1,
+        },
+      ],
+    }));
+  };
+
   return (
     <aside className="min-w-[600px] p-12 flex flex-col items-end">
       <div className="mb-6 w-full">
@@ -60,7 +76,10 @@ const Aside = ({ form, setForm }) => {
               </button>
             </div>
           ))}
-        <button className="bg-cyan-600 text-gray-50 px-4 py-2 rounded-md text-lg">
+        <button
+          className="bg-cyan-600 text-gray-50 px-4 py-2 rounded-md text-lg"
+          onClick={addField}
+        >
           Add new field
         </button>
       </div>
