@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import HomePage from "../components/HomePage";
 
 const AllLinksQuery = gql`
   query {
@@ -14,14 +15,9 @@ const AllLinksQuery = gql`
 `;
 
 const Home: NextPage = () => {
-  const { data, loading, error } = useQuery(AllLinksQuery);
+  const { data } = useQuery(AllLinksQuery);
 
-  if (loading) return <h1>Loading.....</h1>;
-  if (error) return <h1>Ops! Something went wrong</h1>;
-
-  console.log(data);
-
-  return <h1>Landing page</h1>;
+  return <HomePage data={data} />;
 };
 
 export default Home;
