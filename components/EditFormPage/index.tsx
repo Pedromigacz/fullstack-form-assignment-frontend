@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Header from "../shared/Header";
 import Aside from "./Aside";
+import PuppetForm from "../shared/PuppetForm";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 
@@ -57,6 +58,7 @@ const EditFormPageLayout = () => {
     <div className="flex min-h-screen">
       <main className="bg-zinc-900 grow">
         <Header darkTheme={true} />
+        <PuppetForm form={form} />
       </main>
       <Aside form={form} setForm={setForm} />
     </div>
