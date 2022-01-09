@@ -1,13 +1,17 @@
 import Link from "next/link";
 
-const Header = ({ data }) => {
+const Header = ({ data, darkTheme }) => {
   return (
     <header className="flex items-center w-full h-16">
       <Link href="/">
-        <a className="ml-8 mr-4 font-bold">Home</a>
+        <a className={`ml-8 mr-4 font-bold ${darkTheme && "text-gray-50"}`}>
+          Home
+        </a>
       </Link>
       <Link href="/createForm">
-        <a className="ml-4 mr-8 font-bold">Create new form</a>
+        <a className={`ml-4 mr-8 font-bold ${darkTheme && "text-gray-50"}`}>
+          Create new form
+        </a>
       </Link>
     </header>
   );
