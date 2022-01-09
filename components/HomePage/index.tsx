@@ -1,7 +1,14 @@
 import type { NextPage } from "next";
+import Header from "../shared/Header";
+import FormList from "./FormList";
 
 const HomePageLayout: NextPage = ({ data }) => {
-  return <h1 className="text-blue-500">Landing page</h1>;
+  return (
+    <>
+      <Header />
+      <FormList formList={data} />
+    </>
+  );
 };
 
 export default HomePageLayout;
