@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import HomePage from "../components/HomePage";
 
-const AllLinksQuery = gql`
+const AllFormsQuery = gql`
   query {
     forms {
       id
@@ -15,7 +15,7 @@ const AllLinksQuery = gql`
 `;
 
 const Home: NextPage = () => {
-  const { data } = useQuery(AllLinksQuery);
+  const { data } = useQuery(AllFormsQuery);
 
   return <HomePage data={data} />;
 };
