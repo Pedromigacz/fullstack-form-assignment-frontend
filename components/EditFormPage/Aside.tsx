@@ -36,6 +36,18 @@ const Aside = ({ form, setForm }) => {
     }));
   };
 
+  const removeField = (index) => {
+    setForm((prev) => {
+      const newFields = prev.fields.filter((field, key) => {
+        return key !== index;
+      });
+      return {
+        ...prev,
+        fields: newFields,
+      };
+    });
+  };
+
   return (
     <aside className="min-w-[600px] p-12 flex flex-col items-end">
       <div className="mb-6 w-full">
@@ -71,7 +83,12 @@ const Aside = ({ form, setForm }) => {
               <button className="p-2">
                 <ArrowNarrowDownIcon className="h-5 w-5 mr-2" />
               </button>
-              <button className="p-2">
+              <button
+                className="p-2"
+                onClick={(e) => {
+                  removeField(key);
+                }}
+              >
                 <XIcon className="h-5 w-5 mr-2 text-orange-700" />
               </button>
             </div>

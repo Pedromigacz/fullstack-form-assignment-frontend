@@ -28,7 +28,13 @@ const EditFormPageLayout = () => {
   const [form, setForm] = useState();
 
   useEffect(() => {
-    if (data) setForm(data.form);
+    if (data)
+      setForm((prev) => ({
+        ...data.form,
+        fields: [...data.form.fields].sort(
+          (prev, curr) => prev.sort_index - curr.sort_index
+        ),
+      }));
   }, [loading, setForm]);
 
   return loading || !form ? (
