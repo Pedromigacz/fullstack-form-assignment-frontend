@@ -68,13 +68,43 @@ const Aside = ({ form, setForm }) => {
 
   const advanceInOrder = (e, index) => {
     e.preventDefault();
+    if (index === 0) return;
     setForm((prev) => {
-      let newFieldsOrder = [...prev.fields];
-      let bubble = newFieldsOrder[index].sort_index;
+      const newFieldsOrder = [];
+      prev.fields.map((val) => newFieldsOrder.push(Object.assign({}, val)));
+      const bubble = newFieldsOrder[index].sort_index;
       newFieldsOrder[index].sort_index = newFieldsOrder[index - 1].sort_index;
       newFieldsOrder[index - 1].sort_index = bubble;
 
-      return { ...prev, fields: [...newFieldsOrder] };
+      return {
+        ...prev,
+        fields: [
+          ...newFieldsOrder.sort(
+            (prev, curr) => prev.sort_index - curr.sort_index
+          ),
+        ],
+      };
+    });
+  };
+
+  const retrieveInOrder = (e, index) => {
+    e.preventDefault();
+    if (index === form.fields.length - 1) return;
+    setForm((prev) => {
+      const newFieldsOrder = [];
+      prev.fields.map((val) => newFieldsOrder.push(Object.assign({}, val)));
+      const bubble = newFieldsOrder[index].sort_index;
+      newFieldsOrder[index].sort_index = newFieldsOrder[index + 1].sort_index;
+      newFieldsOrder[index + 1].sort_index = bubble;
+
+      return {
+        ...prev,
+        fields: [
+          ...newFieldsOrder.sort(
+            (prev, curr) => prev.sort_index - curr.sort_index
+          ),
+        ],
+      };
     });
   };
 
@@ -132,7 +162,12 @@ const Aside = ({ form, setForm }) => {
             >
               <ArrowNarrowUpIcon className="h-5 w-5 mr-2" />
             </button>
-            <button className="p-2">
+            <button
+              className="p-2"
+              onClick={(e) => {
+                retrieveInOrder(e, key);
+              }}
+            >
               <ArrowNarrowDownIcon className="h-5 w-5 mr-2" />
             </button>
             <button
